@@ -56,13 +56,13 @@ export const chain: any = {
   84531: 'base-goerli'
 }
 
-export const paymasterClient = (chainId: number): PimlicoPaymasterClient => {
-  return createPimlicoPaymasterClient({
-    transport: http(
-      `https://api.pimlico.io/v2/${chain[chainId]}/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
-    ),
-  });
-}
+// export const paymasterClient = (chainId: number): PimlicoPaymasterClient => {
+//   return createPimlicoPaymasterClient({
+//     transport: http(
+//       `https://api.pimlico.io/v2/${chain[chainId]}/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
+//     ),
+//   });
+// }
 
 export const generateRandomBuffer = (): ArrayBuffer => {
   const arr = new Uint8Array(32);

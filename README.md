@@ -16,7 +16,7 @@ Built using:
 - [Web App](https://safesession.zenguard.xyz)
 
 - Try Safe App
-    - [Sepoli Testnet](https://app.safe.global/share/safe-app?appUrl=https://safesession.zenguard.xyz&chain=gor)
+    - [Sepoli Testnet](https://app.safe.global/share/safe-app?appUrl=https://safesession.zenguard.xyz&chain=sep)
 
 
 ## Deployments

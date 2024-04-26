@@ -2,32 +2,35 @@ import { Text, ActionIcon, Alert, Button, CopyButton, Input, Modal, Paper, Popov
 import classes from './account.module.css';
 import { useEffect, useState } from 'react';
 import useLinkStore from '@/store/link/link.store';
-import { formatEther, parseEther, parseUnits, ZeroAddress } from 'ethers';
+import { ethers, formatEther, parseEther, parseUnits, ZeroAddress } from 'ethers';
 
-import { Icon2fa, IconCheck, IconChevronDown, IconClock, IconCoin, IconConfetti, IconCopy, IconDownload, IconError404, IconGif, IconGift, IconHomeDown, IconSend, IconTransferOut } from '@tabler/icons';
+import { Icon2fa, IconCheck, IconChevronDown, IconClock, IconCoin, IconConfetti, IconCopy, IconDownload, IconEdit, IconError404, IconGif, IconGift, IconHomeDown, IconSend, IconTransferOut } from '@tabler/icons';
 import { NetworkUtil } from '@/logic/networks';
 import Confetti from 'react-confetti';
 import { getIconForId, getTokenInfo, getTokenList, tokenList } from '@/logic/tokens';
 import { send } from 'process';
 import { getJsonRpcProvider } from '@/logic/web3';
-import { loadSessionKey } from '@/utils/storage';
+import { loadSessionKey, storeSessionKey } from '@/utils/storage';
 import { getSessionData, subscribeWithSessionKey, waitForExecution } from '@/logic/module';
 import { IconAlertCircleFilled, IconCircleCheckFilled } from '@tabler/icons-react';
 import { formatTime } from '@/logic/utils';
+import { useDisclosure } from '@mantine/hooks';
 
 
 
 export const AccountPage = () => {
   const { claimDetails, setClaimDetails, setConfirming, confirming} = useLinkStore((state: any) => state);
   
-  const [ balance, setBalance ] = useState<any>(0);
+  const [opened, { open, close }] = useDisclosure(!Object.keys(loadSessionKey()).length);
   const [sendModal, setSendModal] = useState(false);
-  const [tokenValue, setTokenValue] = useState<bigint>(0);
+  const [tokenValue, setTokenValue] = useState<bigint>(0n);
   const [sendAddress, setSendAddress] = useState('0x958543756A4c7AC6fB361f0efBfeCD98E4D297Db');
   const [sendSuccess, setSendSuccess] = useState(false);
   const [sessionKeyActive, setSessionKeyActive] = useState(false);
+  const [sessionKey, setSessionkey] = useState(loadSessionKey());
+  const [privateKey, setPrivateKey] = useState('');
   const [limitAmount, setLimitAmount] = useState(''); 
-  const [refreshIn, setRefreshIn] = useState<BigInt>(0n);
+  const [refreshIn, setRefreshIn] = useState<bigint>(0n);
   const [validTill, setValidTill] = useState(0);
   const [validAfter, setValidAfter] = useState(0);
 
@@ -38,17 +41,12 @@ export const AccountPage = () => {
   const [value, setValue] = useState<string>("0x0000000000000000000000000000000000000000");
 
 
-  console.log(refreshIn)
+  console.log(sessionKey)
 
   useEffect(() => {
     (async () => {
- 
-      const sessionKey = loadSessionKey()
-
-      console.log(sessionKey)
 
       const {validAfter, validUntil, limitAmount, limitUsed, lastUsed, refreshInterval} = await getSessionData(chainId, sessionKey.key, ZeroAddress);
-
 
       const currentTime = Date.now();
       const availableLimit =  currentTime > (parseInt(refreshInterval)*1000 + parseInt(lastUsed)*1000) && parseInt(refreshInterval) ? limitAmount : (limitAmount - limitUsed);
@@ -60,25 +58,78 @@ export const AccountPage = () => {
       setLimitAmount(formatEther(limitAmount));
       setTokenValue(availableLimit)
 
-
-
       
     })();
-  }, [chainId, sendLoader, confirming]);
+  }, [chainId, sendLoader, confirming, sessionKey]);
 
 
 
   return (
     <>
 
-<Modal opened={sendModal} onClose={()=>{ setSendModal(false); setSendSuccess(false); setValue(ZeroAddress);}} title="Transfer your crypto" centered>
+ <Modal opened={opened} onClose={close} title="Import session key" centered>
 
 <div className={classes.formContainer}>
       <div>
-        <h1 className={classes.heading}>Send crypto anywhere</h1>
+        <h1 className={classes.heading}>Add a session key</h1>
+      </div>
+
+      <div className={classes.inputContainer}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginTop: '20px',
+                  alignItems: 'center',
+                }}
+              >
+
+              </div>
+
+              <Input.Wrapper label={`Enter Session Private Key`}>   
+              <Input
+                  type="string"
+                  size='lg'
+                  value={privateKey}
+                  onChange={(e: any) => setPrivateKey(e?.target?.value)}
+                  placeholder="Enter the key"
+                  className={classes.input}
+                />
+              </Input.Wrapper>
+
+            </div>
+            
+              <Button
+              size="lg" radius="md" 
+              style={{marginBottom: '20px'}}
+              fullWidth
+              color="green"
+              className={classes.btn}
+              onClick={async () =>  {
+                storeSessionKey((new ethers.Wallet(privateKey)).address, privateKey);
+                setSessionkey({key: (new ethers.Wallet(privateKey)).address, privateKey: privateKey});
+                close();
+               
+                
+              } }
+              loaderProps={{ color: 'white', type: 'dots', size: 'md' }}
+              loading={sendLoader}
+            >
+              Load Now
+            </Button>
+            
+    </div>
+  
+</Modal> 
+
+<Modal opened={sendModal} onClose={()=>{ setSendModal(false); setSendSuccess(false); setValue(ZeroAddress);}} title="Claim your crypto" centered>
+
+<div className={classes.formContainer}>
+      <div>
+        <h1 className={classes.heading}>Claim from Safe</h1>
       </div>
       <p className={classes.subHeading}>
-        Send your crypto gas free.
+        Just one click away!
       </p>
 
 
@@ -188,7 +239,7 @@ export const AccountPage = () => {
 
         <p className={classes.balance}> { balanceLoading ? <Skeleton height={20} width={110} mt={6} radius="xl" /> : `${tokenValue ? formatEther(tokenValue) : limitAmount } ${getTokenInfo(parseInt(chainId), ZeroAddress).label}` }</p> 
           
-        {  tokenValue && <div className={classes.balanceContainer}>
+        {  Boolean(tokenValue) && <div className={classes.balanceContainer}>
                       <Text >  Available to claim
                       </Text>
                       <IconCircleCheckFilled style={{ width: rem(30), color: 'green'}} />
@@ -211,7 +262,7 @@ export const AccountPage = () => {
       
           <div className={classes.actions}>
 
-          {  tokenValue &&
+          {  Boolean(tokenValue) &&
             <Button size="lg" radius="md"
              style={{ width: '220px' }}
             className={classes.btn} 
@@ -233,21 +284,17 @@ export const AccountPage = () => {
           </div>
 
           <div className={classes.balanceContainer}>
-         <Text >  <p > Copy Session Key</p>
+         <Text >  <p > Update Session Key</p>
           </Text>
-          <CopyButton value={"reveal session key"} timeout={1000}>
-              {({ copied, copy }) => (
-                <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
-                  <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
-                    {copied ? (
-                      <IconCheck style={{ width: rem(16) }} />
-                    ) : (
-                      <IconCopy style={{ width: rem(16) }} />
-                    )}
+  
+                {/* <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right"> */}
+                  <ActionIcon color={'gray'} variant="subtle" onClick={open}>
+                
+                      <IconEdit style={{ width: rem(16) }} />
+             
                   </ActionIcon>
-                </Tooltip>
-              )}
-            </CopyButton>
+                {/* </Tooltip> */}
+
             </div>
           
         </div>

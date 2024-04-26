@@ -178,11 +178,11 @@ function HomePage() {
         <>
           <div className={classes.successContainer}>
             <Paper className={classes.formContainer} shadow="md" withBorder radius="md" >
-              <h1 className={classes.heading}>Link is Ready!</h1>
+              <h1 className={classes.heading}>Session Key is Ready!</h1>
 
               <p className={classes.subheading} style={{ textAlign: 'center' }}>
                 
-               Safeguard this link and share it with those you trust to spread the crypto love ❤️ ❤️
+               This session key is link a magic wand. Check out the magic here ❤️ ❤️
               </p>
 
               <div className={classes.copyContainer}>
@@ -205,7 +205,7 @@ function HomePage() {
                <CopyToClipboard text={sessionKey.privateKey}
                 onCopy={() => setCopied(true)}>
           <Button size="lg" radius="md" style={{ width: '180px' }}  color="teal">
-          {copied ? 'Link Copied' : 'Copy Link'}
+          {copied ? 'Key Copied' : 'Copy Key'}
             </Button>
             </CopyToClipboard >
           </div>
@@ -333,7 +333,7 @@ function HomePage() {
                   type="number"
                   size="lg"
                   value={refreshInterval}
-                  onChange={(e) => setRefreshInterval(e?.target?.value)}
+                  onChange={(e) => setRefreshInterval(parseInt(e.target.value))}
                   placeholder="Enter the value"
                   description={formatTime(refreshInterval)}
                   inputWrapperOrder={['label', 'input', 'description']}

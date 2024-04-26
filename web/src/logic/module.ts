@@ -148,8 +148,7 @@ export const subscribeWithSessionKey = async (chainId: string, recipient: string
 
 
     const sponsorUserOperationResult = await paymasterClient.sponsorUserOperation({
-        userOperation: sessionOp,
-        entryPoint: ENTRYPOINT_ADDRESS_V07,
+        userOperation: sessionOp
     })
 
 
@@ -200,7 +199,7 @@ export const waitForExecution = async (userOperationHash: string) => {
     })
     
 
-    const receipt = await bundlerClient.waitForUserOperationReceipt({ hash: userOperationHash })
+    const receipt = await bundlerClient.waitForUserOperationReceipt({ hash: userOperationHash as Hex })
 
     return receipt;
 

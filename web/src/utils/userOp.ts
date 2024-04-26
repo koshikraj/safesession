@@ -35,24 +35,6 @@ export type SafeUserOperation = {
     signature: BytesLike;
   };
 
-//   export type UserOperation = {
-//     sender: string;
-//     nonce: BigNumberish;
-//     factory?: string;
-//     factoryData?: BytesLike;
-//     callData: BytesLike;
-//     callGasLimit: BigNumberish;
-//     verificationGasLimit: BigNumberish;
-//     preVerificationGas: BigNumberish;
-//     maxFeePerGas: BigNumberish;
-//     maxPriorityFeePerGas: BigNumberish;
-//     paymaster?: string;
-//     paymasterVerificationGasLimit?: BigNumberish;
-//     paymasterPostOpGasLimit?: BigNumberish;
-//     paymasterData?: BytesLike;
-//     signature: BytesLike;
-// };
-
 
 export const EIP712_SAFE_OPERATION_TYPE = {
   SafeOp: [
@@ -222,12 +204,12 @@ export const buildPackedUserOperationFromSafeUserOperation = ({
   }
 }
 
-export const buildRpcUserOperationFromSafeUserOperation = (op: {
-  safeOp: SafeUserOperation
-  signature: string
-}): Promise<UserOperation> => {
-  return unpackUserOperation(buildPackedUserOperationFromSafeUserOperation(op))
-}
+// export const buildRpcUserOperationFromSafeUserOperation = (op: {
+//   safeOp: SafeUserOperation
+//   signature: string
+// }): Promise<UserOperation<"v0.7">> => {
+//   return unpackUserOperation(buildPackedUserOperationFromSafeUserOperation(op))
+// }
 
 export const getRequiredGas = (userOp: PackedUserOperation): string => {
   let multiplier = 3n
@@ -318,58 +300,58 @@ export const unpackGasParameters = (packed: PackedGasParameters): GasParameters 
   return { verificationGasLimit, callGasLimit, maxPriorityFeePerGas, maxFeePerGas }
 }
 
-/**
- * Unpacks a user operation.
- *
- * @param packedUserOp - The packed user operation.
- * @returns The unpacked user operation.
- */
-export const unpackUserOperation = async (packedUserOp: PackedUserOperation): Promise<UserOperation> => {
-  return {
-    sender: await ethers.resolveAddress(packedUserOp.sender),
-    nonce: packedUserOp.nonce,
-    ...unpackInitCode(packedUserOp),
-    callData: packedUserOp.callData,
-    ...unpackGasParameters(packedUserOp),
-    preVerificationGas: packedUserOp.preVerificationGas,
-    ...unpackPaymasterAndData(packedUserOp),
-    signature: packedUserOp.signature,
-  }
-}
+// /**
+//  * Unpacks a user operation.
+//  *
+//  * @param packedUserOp - The packed user operation.
+//  * @returns The unpacked user operation.
+//  */
+// export const unpackUserOperation = async (packedUserOp: PackedUserOperation): Promise<UserOperation> => {
+//   return {
+//     sender: await ethers.resolveAddress(packedUserOp.sender),
+//     nonce: packedUserOp.nonce,
+//     ...unpackInitCode(packedUserOp),
+//     callData: packedUserOp.callData,
+//     ...unpackGasParameters(packedUserOp),
+//     preVerificationGas: packedUserOp.preVerificationGas,
+//     ...unpackPaymasterAndData(packedUserOp),
+//     signature: packedUserOp.signature,
+//   }
+// }
 
-/**
- * Unpacks a user operation's `initCode` field into a factory address and its data.
- *
- * @param _ - The packed user operation.
- * @returns The unpacked `initCode`.
- */
-export const unpackInitCode = ({ initCode }: Pick<PackedUserOperation, 'initCode'>): Pick<UserOperation, 'factory' | 'factoryData'> => {
-  return ethers.dataLength(initCode) > 0
-    ? {
-        factory: ethers.getAddress(ethers.dataSlice(initCode, 0, 20)),
-        factoryData: ethers.dataSlice(initCode, 20),
-      }
-    : {}
-}
+// /**
+//  * Unpacks a user operation's `initCode` field into a factory address and its data.
+//  *
+//  * @param _ - The packed user operation.
+//  * @returns The unpacked `initCode`.
+//  */
+// export const unpackInitCode = ({ initCode }: Pick<PackedUserOperation, 'initCode'>): Pick<UserOperation<"v0.7">, 'factory' | 'factoryData'> => {
+//   return ethers.dataLength(initCode) > 0
+//     ? {
+//         factory: ethers.getAddress(ethers.dataSlice(initCode, 0, 20)),
+//         factoryData: ethers.dataSlice(initCode, 20),
+//       }
+//     : {}
+// }
 
-/**
- * Unpacks a user operation's `paymasterAndData` field into a the paymaster options.
- *
- * @param _ - The packed user operation.
- * @returns The unpacked `paymasterAndData`.
- */
-export const unpackPaymasterAndData = ({
-  paymasterAndData,
-}: Pick<PackedUserOperation, 'paymasterAndData'>): Pick<
-  UserOperation,
-  'paymaster' | 'paymasterVerificationGasLimit' | 'paymasterPostOpGasLimit' | 'paymasterData'
-> => {
-  return ethers.dataLength(paymasterAndData) > 0
-    ? {
-        paymaster: ethers.getAddress(ethers.dataSlice(paymasterAndData, 0, 20)),
-        paymasterVerificationGasLimit: BigInt(ethers.dataSlice(paymasterAndData, 20, 36)),
-        paymasterPostOpGasLimit: BigInt(ethers.dataSlice(paymasterAndData, 36, 52)),
-        paymasterData: ethers.dataSlice(paymasterAndData, 52),
-      }
-    : {}
-}
+// /**
+//  * Unpacks a user operation's `paymasterAndData` field into a the paymaster options.
+//  *
+//  * @param _ - The packed user operation.
+//  * @returns The unpacked `paymasterAndData`.
+//  */
+// export const unpackPaymasterAndData = ({
+//   paymasterAndData,
+// }: Pick<PackedUserOperation, 'paymasterAndData'>): Pick<
+//   UserOperation<,
+//   'paymaster' | 'paymasterVerificationGasLimit' | 'paymasterPostOpGasLimit' | 'paymasterData'
+// > => {
+//   return ethers.dataLength(paymasterAndData) > 0
+//     ? {
+//         paymaster: ethers.getAddress(ethers.dataSlice(paymasterAndData, 0, 20)),
+//         paymasterVerificationGasLimit: BigInt(ethers.dataSlice(paymasterAndData, 20, 36)),
+//         paymasterPostOpGasLimit: BigInt(ethers.dataSlice(paymasterAndData, 36, 52)),
+//         paymasterData: ethers.dataSlice(paymasterAndData, 52),
+//       }
+//     : {}
+// }
