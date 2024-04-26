@@ -75,7 +75,7 @@
 "@babel/compat-data@^7.23.3", "@babel/compat-data@^7.23.5":
   version "7.23.5"
 
-"@babel/core@^7.11.6", "@babel/core@^7.18.9", "@babel/core@^7.20.12", "@babel/core@^7.23.0", "@babel/core@^7.23.2", "@babel/core@^7.23.5":
+"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.11.6", "@babel/core@^7.12.0", "@babel/core@^7.13.0", "@babel/core@^7.18.9", "@babel/core@^7.20.12", "@babel/core@^7.23.0", "@babel/core@^7.23.2", "@babel/core@^7.23.5", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0":
   version "7.23.5"
   dependencies:
     "@ampproject/remapping" "^2.2.0"
@@ -844,7 +844,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.22.15"
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/preset-env@^7.23.2":
+"@babel/preset-env@^7.1.6", "@babel/preset-env@^7.23.2":
   version "7.23.5"
   dependencies:
     "@babel/compat-data" "^7.23.5"
@@ -1078,10 +1078,10 @@
 "@colors/colors@1.5.0":
   version "1.5.0"
 
-"@csstools/css-parser-algorithms@^2.3.1":
+"@csstools/css-parser-algorithms@^2.3.1", "@csstools/css-parser-algorithms@^2.3.2":
   version "2.3.2"
 
-"@csstools/css-tokenizer@^2.2.0":
+"@csstools/css-tokenizer@^2.2.0", "@csstools/css-tokenizer@^2.2.1":
   version "2.2.1"
 
 "@csstools/media-query-list-parser@^2.1.4":
@@ -1571,7 +1571,7 @@
 "@juggle/resize-observer@^3.3.1":
   version "3.4.0"
 
-"@mantine/core@7.3.0":
+"@mantine/core@7.3.0", "@mantine/core@7.8.1":
   version "7.3.0"
   dependencies:
     "@floating-ui/react" "^0.24.8"
@@ -1588,7 +1588,7 @@
   dependencies:
     clsx "2.1.0"
 
-"@mantine/hooks@7.3.0":
+"@mantine/hooks@7.3.0", "@mantine/hooks@7.8.1":
   version "7.3.0"
 
 "@mdx-js/react@^2.1.5":
@@ -2481,7 +2481,7 @@
   resolved "https://registry.npmjs.org/@tabler/icons/-/icons-2.44.0.tgz"
   integrity sha512-WPPtihDcAwEm1QZM9MXQw6+r/R2/qx7KMU1eegsi9DsqBLAb0W2kbt6e/syvd6j9c+6XNpRVBW1ziGqSWQAWOg==
 
-"@testing-library/dom@^9.0.0", "@testing-library/dom@^9.3.3":
+"@testing-library/dom@^9.0.0", "@testing-library/dom@^9.3.3", "@testing-library/dom@>=7.21.4":
   version "9.3.3"
   dependencies:
     "@babel/code-frame" "^7.10.4"
@@ -2719,7 +2719,7 @@
     "@types/node" "*"
     form-data "^4.0.0"
 
-"@types/node@*", "@types/node@^20.10.4":
+"@types/node@*", "@types/node@^18.0.0 || >=20.0.0", "@types/node@^20.10.4", "@types/node@>= 14":
   version "20.10.4"
   resolved "https://registry.npmjs.org/@types/node/-/node-20.10.4.tgz"
   integrity sha512-D08YG6rr8X90YB56tSIuBaddy/UXAA9RKJoFvrsnogAum/0pmjkgi4+2nx96A330FmioegBWmEYQ+syqCFaveg==
@@ -2761,12 +2761,12 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@^18.0.0", "@types/react-dom@^18.2.14":
+"@types/react-dom@*", "@types/react-dom@^18.0.0", "@types/react-dom@^18.2.14":
   version "18.2.17"
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.36", "@types/react@>=16":
+"@types/react@*", "@types/react@^16.8.0 || ^17.0.0 || ^18.0.0", "@types/react@^16.9.0 || ^17.0.0 || ^18.0.0", "@types/react@^18.2.36", "@types/react@>=16", "@types/react@>=16.8":
   version "18.2.42"
   dependencies:
     "@types/prop-types" "*"
@@ -2817,7 +2817,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^6.9.1":
+"@typescript-eslint/eslint-plugin@^5.13.0 || ^6.0.0", "@typescript-eslint/eslint-plugin@^6.8.0", "@typescript-eslint/eslint-plugin@^6.9.1":
   version "6.13.2"
   dependencies:
     "@eslint-community/regexpp" "^4.5.1"
@@ -2832,7 +2832,7 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@^6.9.1":
+"@typescript-eslint/parser@^5.0.0 || ^6.0.0", "@typescript-eslint/parser@^6.0.0 || ^6.0.0-alpha", "@typescript-eslint/parser@^6.8.0", "@typescript-eslint/parser@^6.9.1":
   version "6.13.2"
   dependencies:
     "@typescript-eslint/scope-manager" "6.13.2"
@@ -2988,6 +2988,9 @@ acorn-walk@^7.2.0:
 acorn-walk@^8.2.0:
   version "8.3.1"
 
+"acorn@^6.0.0 || ^7.0.0 || ^8.0.0", acorn@^8.9.0:
+  version "8.10.0"
+
 acorn@^7.4.1:
   version "7.4.1"
 
@@ -2996,9 +2999,6 @@ acorn@^8.10.0:
 
 acorn@^8.11.2:
   version "8.11.2"
-
-acorn@^8.9.0:
-  version "8.10.0"
 
 address@^1.0.1:
   version "1.2.2"
@@ -3446,7 +3446,7 @@ browserify-zlib@^0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserslist@^4.21.9:
+browserslist@^4.21.9, "browserslist@>= 4.21.0":
   version "4.21.9"
   dependencies:
     caniuse-lite "^1.0.30001503"
@@ -3897,7 +3897,7 @@ data-urls@^4.0.0:
     whatwg-mimetype "^3.0.0"
     whatwg-url "^12.0.0"
 
-dayjs@^1.11.10:
+dayjs@^1.11.10, dayjs@>=1.0.0:
   version "1.11.10"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.10.tgz"
   integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
@@ -4304,7 +4304,7 @@ esbuild-register@^3.5.0:
   dependencies:
     debug "^4.3.4"
 
-esbuild@^0.18.0, esbuild@^0.18.10:
+esbuild@^0.18.0, esbuild@^0.18.10, esbuild@>=0.10.0, "esbuild@>=0.12 <1":
   version "0.18.20"
   optionalDependencies:
     "@esbuild/android-arm" "0.18.20"
@@ -4412,7 +4412,7 @@ eslint-module-utils@^2.8.0:
   dependencies:
     debug "^3.2.7"
 
-eslint-plugin-import@^2.29.0:
+eslint-plugin-import@^2.25.2, eslint-plugin-import@^2.25.3, eslint-plugin-import@^2.28.1, eslint-plugin-import@^2.29.0:
   version "2.29.0"
   dependencies:
     array-includes "^3.1.7"
@@ -4433,7 +4433,7 @@ eslint-plugin-import@^2.29.0:
     semver "^6.3.1"
     tsconfig-paths "^3.14.2"
 
-eslint-plugin-jsx-a11y@^6.7.0:
+eslint-plugin-jsx-a11y@^6.5.1, eslint-plugin-jsx-a11y@^6.7.0, eslint-plugin-jsx-a11y@^6.7.1:
   version "6.8.0"
   dependencies:
     "@babel/runtime" "^7.23.2"
@@ -4453,10 +4453,10 @@ eslint-plugin-jsx-a11y@^6.7.0:
     object.entries "^1.1.7"
     object.fromentries "^2.0.7"
 
-eslint-plugin-react-hooks@^4.6.0:
+eslint-plugin-react-hooks@^4.3.0, eslint-plugin-react-hooks@^4.6.0:
   version "4.6.0"
 
-eslint-plugin-react@^7.33.2:
+eslint-plugin-react@^7.28.0, eslint-plugin-react@^7.33.2:
   version "7.33.2"
   dependencies:
     array-includes "^3.1.6"
@@ -4488,7 +4488,7 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1:
 eslint-visitor-keys@^3.4.3:
   version "3.4.3"
 
-eslint@^8.53.0:
+"eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || >=8.0.0", "eslint@^7.0.0 || ^8.0.0", "eslint@^7.32.0 || ^8.2.0", eslint@^8.51.0, eslint@^8.53.0:
   version "8.55.0"
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
@@ -5097,7 +5097,7 @@ glob@^10.0.0:
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
     path-scurry "^1.10.1"
 
-glob@^7.0.3, glob@^7.1.3, glob@^7.1.4, glob@^7.2.0:
+glob@^7.0.3, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6, glob@^7.2.0:
   version "7.2.3"
   dependencies:
     fs.realpath "^1.0.0"
@@ -5724,7 +5724,7 @@ jscodeshift@^0.15.1:
     temp "^0.8.4"
     write-file-atomic "^2.3.0"
 
-jsdom@^22.1.0:
+jsdom@*, jsdom@^22.1.0:
   version "22.1.0"
   dependencies:
     abab "^2.0.6"
@@ -6592,7 +6592,7 @@ postcss-simple-vars@^7.0.0, postcss-simple-vars@^7.0.1:
 postcss-value-parser@^4.0.2, postcss-value-parser@^4.2.0:
   version "4.2.0"
 
-postcss@^8.4.27, postcss@^8.4.28, postcss@^8.4.31, postcss@^8.4.32:
+postcss@^8.2.1, postcss@^8.2.14, postcss@^8.3.3, postcss@^8.4.21, postcss@^8.4.27, postcss@^8.4.28, postcss@^8.4.29, postcss@^8.4.31, postcss@^8.4.32, postcss@>=8.0.0:
   version "8.4.32"
   dependencies:
     nanoid "^3.3.7"
@@ -6793,7 +6793,7 @@ react-docgen@^7.0.0:
     resolve "^1.22.1"
     strip-indent "^4.0.0"
 
-react-dom@^18.2.0:
+"react-dom@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.x || 17.x || 18.x", react-dom@^18.0.0, react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.8, react-dom@>=16.8.0, "react-dom@16.8.0 - 18":
   version "18.2.0"
   dependencies:
     loose-envify "^1.1.0"
@@ -6877,7 +6877,7 @@ react-textarea-autosize@8.5.3:
     use-composed-ref "^1.3.0"
     use-latest "^1.2.1"
 
-react@^18.2.0:
+"react@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0", "react@^15.3.0 || 16 || 17 || 18", "react@^16.3.0 || ^17.0.1 || ^18.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.x || 17.x || 18.x", react@^18.0.0, react@^18.2.0, "react@>= 0.14.0", "react@>= 16.8.0", react@>=16, react@>=16.8, react@>=16.8.0, "react@16.8.0 - 18":
   version "18.2.0"
   dependencies:
     loose-envify "^1.1.0"
@@ -7122,7 +7122,7 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-"rollup@^2.25.0 || ^3.3.0", rollup@^3.27.1:
+rollup@^1.20.0||^2.0.0||^3.0.0||^4.0.0, "rollup@^2.25.0 || ^3.3.0", rollup@^3.27.1:
   version "3.29.4"
   optionalDependencies:
     fsevents "~2.3.2"
@@ -7586,7 +7586,7 @@ stylelint-scss@^5.3.0:
     postcss-selector-parser "^6.0.13"
     postcss-value-parser "^4.2.0"
 
-stylelint@^15.11.0:
+"stylelint@^14.5.1 || ^15.0.0", stylelint@^15.10.0, stylelint@^15.11.0:
   version "15.11.0"
   dependencies:
     "@csstools/css-parser-algorithms" "^2.3.1"
@@ -7633,7 +7633,7 @@ stylelint@^15.11.0:
 stylis@^4.3.0:
   version "4.3.0"
 
-sugarss@^4.0.1:
+sugarss@*, sugarss@^4.0.1:
   version "4.0.1"
 
 supports-color@^5.3.0:
@@ -7925,7 +7925,7 @@ typed-array-length@^1.0.4:
 typedarray@^0.0.6:
   version "0.0.6"
 
-typescript@^5.1, typescript@^5.3.3:
+typescript@*, "typescript@^4.3.5 || ^5.0.0", typescript@^5.1, typescript@^5.3.3, "typescript@>= 4.3.x", typescript@>=4.2.0, typescript@>=4.9.5, typescript@>=5.0.4:
   version "5.3.3"
 
 ufo@^1.3.0:
@@ -8110,7 +8110,7 @@ viem@^1.0.0:
     isows "1.0.3"
     ws "8.13.0"
 
-viem@^2.9.12, viem@^2.9.25:
+viem@^1.16.6, viem@^2.9.12, viem@^2.9.17, viem@^2.9.25:
   version "2.9.25"
   resolved "https://registry.npmjs.org/viem/-/viem-2.9.25.tgz"
   integrity sha512-W0QOXCsYQppnV89PQP0EnCvfZIEsDYqmpVakLPNrok4Q4B7651M3MV/sYifYcLWv3Mn4KUyMCUlVxlej6CfC/w==
@@ -8154,6 +8154,15 @@ vite-tsconfig-paths@^4.2.1:
     globrex "^0.1.2"
     tsconfck "^2.1.0"
 
+vite@*, "vite@^2.0.0 || ^3.0.0 || ^4.0.0", "vite@^3.0.0 || ^4.0.0 || ^5.0.0", vite@^4.1.0-beta.0, "vite@^4.2.0 || ^5.0.0", vite@^4.5.0:
+  version "4.5.1"
+  dependencies:
+    esbuild "^0.18.10"
+    postcss "^8.4.27"
+    rollup "^3.27.1"
+  optionalDependencies:
+    fsevents "~2.3.2"
+
 "vite@^3.0.0 || ^4.0.0 || ^5.0.0-0":
   version "5.0.7"
   dependencies:
@@ -8172,16 +8181,7 @@ vite-tsconfig-paths@^4.2.1:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vite@^4.5.0:
-  version "4.5.1"
-  dependencies:
-    esbuild "^0.18.10"
-    postcss "^8.4.27"
-    rollup "^3.27.1"
-  optionalDependencies:
-    fsevents "~2.3.2"
-
-vitest@^0.34.6:
+vitest@^0.34.6, "vitest@>= 0.32":
   version "0.34.6"
   dependencies:
     "@types/chai" "^4.3.5"
@@ -8378,15 +8378,15 @@ write-file-atomic@^5.0.1:
     imurmurhash "^0.1.4"
     signal-exit "^4.0.1"
 
+ws@*, ws@^8.13.0, ws@8.13.0:
+  version "8.13.0"
+  resolved "https://registry.npmjs.org/ws/-/ws-8.13.0.tgz"
+  integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
+
 ws@^6.1.0:
   version "6.2.2"
   dependencies:
     async-limiter "~1.0.0"
-
-ws@^8.13.0, ws@8.13.0:
-  version "8.13.0"
-  resolved "https://registry.npmjs.org/ws/-/ws-8.13.0.tgz"
-  integrity sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==
 
 ws@^8.2.3:
   version "8.14.2"

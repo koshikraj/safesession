@@ -233,8 +233,10 @@ contract SafeSessionModule is IAccount, HandlerContext, CompatibilityFallbackHan
             revert ExecutionFailed();
             }
 
+            SessionData memory sessionData = sessionKeys[sessionKey][token];
 
-            if (!ISafe(msg.sender).execTransactionFromModule(call.target, call.value, call.data, 0)) {
+
+            if (!ISafe(sessionData.account).execTransactionFromModule(call.target, call.value, call.data, 0)) {
             revert ExecutionFailed();
         }
 
@@ -245,6 +247,7 @@ contract SafeSessionModule is IAccount, HandlerContext, CompatibilityFallbackHan
     function addSessionKey(address sessionKey, address token, SessionData calldata sessionData) public  {
 
         sessionKeys[sessionKey][token] =  sessionData; 
+        sessionKeys[sessionKey][token].account =  msg.sender; 
         emit SessionKeyAdded(sessionKey, msg.sender);
 
     }
@@ -392,11 +395,11 @@ contract SafeSessionModule is IAccount, HandlerContext, CompatibilityFallbackHan
             (address recoveredSig, ECDSA.RecoverError err) = ECDSA.tryRecover(ECDSA.toEthSignedMessageHash(userOpHash), userOp.signature);
 
             if (err != ECDSA.RecoverError.NoError) {
-                revert InvalidSignature(userOp.sender);
+                validationData = uint256(1);
             }
            
             if (sessionKey != recoveredSig) {
-                revert InvalidSignature(userOp.sender);
+                validationData = uint256(1);
             }
     }
 

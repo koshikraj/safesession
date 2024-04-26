@@ -17,7 +17,7 @@ import { createPimlicoBundlerClient, createPimlicoPaymasterClient } from "permis
 import { pimlicoBundlerActions, pimlicoPaymasterActions } from 'permissionless/actions/pimlico'
 import { loadSessionKey, storeSessionKey } from "@/utils/storage";
 
-const moduleAddress = "0xD144Ae2BafE6DDaEc2143BF769732fb5e8Dfc552"
+const moduleAddress = "0xd0133A32B4C8f8f0AE98Bf7902C1F9B2FFcD4db9"
 
 
 export const getSessionData = async (chainId: string, sessionKey: string, token: string): Promise<any> => {
@@ -81,32 +81,31 @@ export async function signAddress(string: string, privateKey: string) {
 
 
 
-export const subscribeWithSessionKey = async (recipient: string, amount: bigint): Promise<string> => {
+export const subscribeWithSessionKey = async (chainId: string, recipient: string, amount: bigint): Promise<string> => {
 
-    const info = await getSafeInfo()
     const provider = await getProvider()
     // Updating the provider RPC if it's from the Safe App.
-    const chainId = (await provider.getNetwork()).chainId.toString()
+    // const chainId = (await provider.getNetwork()).chainId.toString()
     const bProvider = await getJsonRpcProvider(chainId)
 
     const sessionKey = loadSessionKey()
 
     var sessionAccount = new ethers.Wallet(sessionKey.privateKey)
 
-    const { limitAmount } = await getSessionData(chainId, sessionAccount.address, ZeroAddress)
+    const { account } = await getSessionData(chainId, sessionAccount.address, ZeroAddress)
 
 
     const call = {target: recipient, value: amount, data: '0x'}
 
 
     const nonce = await getAccountNonce(publicClient(parseInt(chainId)), {
-        sender: info.safeAddress as Hex,
+        sender: account as Hex,
         entryPoint: ENTRYPOINT_ADDRESS_V07
     })
 
 
     let sessionOp = buildSessionKeyUserOpTransaction(
-        info.safeAddress,
+        account,
         call,
         nonce,
         sessionAccount.address,

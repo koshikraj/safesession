@@ -131,7 +131,7 @@ export const AccountPage = () => {
               className={classes.btn}
               onClick={async () =>  {
                 setSendLoader(true);
-                const hash = await subscribeWithSessionKey(sendAddress, tokenValue);
+                const hash = await subscribeWithSessionKey(chainId, sendAddress, tokenValue);
                 setSendLoader(false);
                 setConfirming(true);
                 setSendModal(false);

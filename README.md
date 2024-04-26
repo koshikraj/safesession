@@ -23,4 +23,4 @@ Built using:
 
 - SafeSession module
 
-  - [Goerli Testnet](https://goerli.etherscan.io/address/0xaB83F7041C82D5a915E608D887073B6C52a28459)
+  - [Sepolia Testnet](https://goerli.etherscan.io/address/0xd0133A32B4C8f8f0AE98Bf7902C1F9B2FFcD4db9)
