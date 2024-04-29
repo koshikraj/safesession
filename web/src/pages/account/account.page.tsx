@@ -34,7 +34,7 @@ export const AccountPage = () => {
   const [validTill, setValidTill] = useState(0);
   const [validAfter, setValidAfter] = useState(0);
 
-  const [balanceLoading, setBalanceLoading] = useState(false);
+  const [sessionLoading, setSessionLoading] = useState(true);
   const [sendLoader, setSendLoader] = useState(false);
   const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [chainId, setChainId] = useState<string>('11155111');
@@ -46,6 +46,8 @@ export const AccountPage = () => {
   useEffect(() => {
     (async () => {
 
+      setSessionLoading(true);
+
       const {validAfter, validUntil, limitAmount, limitUsed, lastUsed, refreshInterval} = await getSessionData(chainId, sessionKey.key, ZeroAddress);
 
       const currentTime = Date.now();
@@ -56,7 +58,9 @@ export const AccountPage = () => {
       setRefreshIn(lastUsed + refreshInterval - BigInt(Math.floor(currentTime/ 1000)))
       setSessionKeyActive(currentTime < parseInt(validUntil)*1000 && currentTime > parseInt(validAfter)*1000);
       setLimitAmount(formatEther(limitAmount));
-      setTokenValue(availableLimit)
+      setTokenValue(availableLimit);
+
+      setSessionLoading(false);
 
       
     })();
@@ -210,12 +214,18 @@ export const AccountPage = () => {
     <Paper className={classes.accountContainer} shadow="md" withBorder radius="md" p="xl" >
       
       <div className={classes.formContainer}>
-     { sessionKeyActive && 
+       { sessionLoading && <>
+      <Skeleton style={{marginBottom: '10px'}} height={20} width={200} mt={6} radius="xl" /> 
+          <Skeleton style={{marginBottom: '20px'}} height={20} width={200} mt={6} radius="xl" /> 
+          <Skeleton style={{marginBottom: '20px'}} height={40} width={150} mt={6} radius="md" />
+       </>
+      }
+     { !sessionLoading && sessionKeyActive && 
      <Alert variant="light" color="green" radius="md" title="" icon={<IconCircleCheckFilled />}>
         <b>  The session key is valid till</b> <br/>
         {`${(new Date(validTill*1000).toDateString())} ${(new Date(validTill*1000).toLocaleTimeString())}`}
     </Alert> }
-    { !sessionKeyActive && 
+    { !sessionLoading && !sessionKeyActive && 
      <Alert variant="light" color="red" radius="md" title="" icon={<IconAlertCircleFilled/>}>
         <b>  The session key is either expired or not active yet </b>
     </Alert> }
@@ -237,7 +247,7 @@ export const AccountPage = () => {
       { sessionKeyActive && <div>
 
 
-        <p className={classes.balance}> { balanceLoading ? <Skeleton height={20} width={110} mt={6} radius="xl" /> : `${tokenValue ? formatEther(tokenValue) : limitAmount } ${getTokenInfo(parseInt(chainId), ZeroAddress).label}` }</p> 
+        <p className={classes.balance}>  {tokenValue ? formatEther(tokenValue) : limitAmount } {getTokenInfo(parseInt(chainId), ZeroAddress).label} </p> 
           
         {  Boolean(tokenValue) && <div className={classes.balanceContainer}>
                       <Text >  Available to claim
@@ -282,8 +292,11 @@ export const AccountPage = () => {
                 </Button>
           }
           </div>
+          
+        </div>
+        </div> }
 
-          <div className={classes.balanceContainer}>
+        <div className={classes.balanceContainer}>
          <Text >  <p > Update Session Key</p>
           </Text>
   
@@ -297,8 +310,6 @@ export const AccountPage = () => {
 
             </div>
           
-        </div>
-        </div> }
 
         </div>
 

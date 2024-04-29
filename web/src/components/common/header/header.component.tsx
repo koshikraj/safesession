@@ -10,7 +10,7 @@ import {
   Chip,
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { Paper, useMantineColorScheme } from '@mantine/core';
+import { Button, useMantineColorScheme } from '@mantine/core';
 import { IconSun, IconMoonStars, IconBrandGithub, IconWallet, IconBrandTwitter, IconKey } from '@tabler/icons';
 import { useState, useEffect } from 'react';
 import { Badge } from '@mantine/core';
@@ -49,6 +49,7 @@ export const Head = (props) => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [network, setNetwork] = useState('');
   const [chainId, setChainId] = useState(84531);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
 
   const dark = colorScheme === 'dark';
 
@@ -58,6 +59,7 @@ export const Head = (props) => {
 
   useEffect(() => {
     (async () => {
+
       const provider = await getProvider();
 
       const { chainId } = await provider.getNetwork();
@@ -68,7 +70,7 @@ export const Head = (props) => {
         )?.type}`
       );
     })();
-  }, []);
+  }, [window.innerWidth]);
 
   return (
     <AppShell.Header>
@@ -86,13 +88,18 @@ export const Head = (props) => {
             </Group>
 
             <Group className={classes.mode}>
-              {/* <Group className={classes.container} position="center"> */}
-              <IconKey
+
+             {isMobile ?  <IconKey
                     size={30}
                     stroke={1.5}
                     onClick={() => navigate(RoutePath.account)}
                     style={{ cursor: 'pointer' }}
-                  />
+                  /> :
+
+                  <Button leftSection={<IconKey size={20} />}  onClick={() => navigate(RoutePath.account)} variant="default">
+                     Session 
+                  </Button> 
+                  }
               <div className={classes.container}>
                 
                 {dark ? (

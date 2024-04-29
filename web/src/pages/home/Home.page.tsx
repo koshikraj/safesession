@@ -39,11 +39,13 @@ import { getSafeInfo } from '@/logic/safeapp';
 import { formatTime, getTokenBalance } from '@/logic/utils';
 import { formatEther } from 'viem';
 import { IconBrandTwitterFilled, IconBrandX } from '@tabler/icons-react';
+import { RoutePath } from '@/navigation/route-path';
 
 
 
 function HomePage() {
   const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate();
   
 
 
@@ -174,7 +176,7 @@ function HomePage() {
             </h1>
 
             </div>
-      { sessionCreated ? (
+      { sessionCreated && !safeError? (
         <>
           <div className={classes.successContainer}>
             <Paper className={classes.formContainer} shadow="md" withBorder radius="md" >
@@ -182,7 +184,7 @@ function HomePage() {
 
               <p className={classes.subheading} style={{ textAlign: 'center' }}>
                 
-               This session key is link a magic wand. Check out the magic here ❤️ ❤️
+               This session key is like a magic wand. Check out the magic <Anchor onClick={() => navigate(RoutePath.account)}>here </Anchor> ❤️ ❤️
               </p>
 
               <div className={classes.copyContainer}>
