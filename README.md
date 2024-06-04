@@ -24,3 +24,7 @@ Built using:
 - SafeSession module
 
   - [Sepolia Testnet](https://goerli.etherscan.io/address/0xd0133A32B4C8f8f0AE98Bf7902C1F9B2FFcD4db9)
+
+## Acknowledgments
+
+This project includes code from [Alchemy's 6900 Session key module](https://github.com/alchemyplatform/modular-account), which is licensed under the [GPL-3.0](https://github.com/alchemyplatform/modular-account/blob/develop/LICENSE-GPL) and [MIT](https://github.com/alchemyplatform/modular-account/blob/develop/LICENSE-MIT).
